@@ -1,0 +1,23 @@
+{
+  "name": "private-captcha-vue-demo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vite --host 127.0.0.1",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit -p tsconfig.json && vite build",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@private-captcha/private-captcha-vue": "*",
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "vue-tsc": "^3.0.6"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "@private-captcha/private-captcha-vue",
+  "version": "0.0.1",
+  "description": "Vue component for the client-side Private Captcha widget",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build && vue-tsc --declaration --emitDeclarationOnly -p tsconfig.json",
+    "pack:check": "vitest run --config vite.config.ts tests/package.spec.ts",
+    "test:coverage": "vitest run --coverage --config vite.config.ts",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@private-captcha/private-captcha-js-core": "0.0.26"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrivateCaptcha/private-captcha-vue.git"
+  },
+  "keywords": [
+    "anti-bot",
+    "captcha",
+    "protection",
+    "vue"
+  ],
+  "license": "MIT"
+}

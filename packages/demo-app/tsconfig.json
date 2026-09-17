@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@private-captcha/private-captcha-vue": [
+        "../private-captcha-vue/src/index.ts"
+      ]
+    },
+    "types": [
+      "vite/client"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "../private-captcha-vue/src/**/*.d.ts"
+  ]
+}

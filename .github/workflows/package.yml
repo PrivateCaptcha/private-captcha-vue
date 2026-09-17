@@ -1,0 +1,49 @@
+name: Publish package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate
+        run: npm run validate
+
+      - name: Verify tag matches package version
+        run: |
+          EXPECTED_TAG="v$(node -p "require('./packages/private-captcha-vue/package.json').version")"
+          test "$GITHUB_REF_NAME" = "$EXPECTED_TAG"
+
+      - name: Check package availability
+        id: package
+        run: |
+          PACKAGE_NAME="$(node -p "require('./packages/private-captcha-vue/package.json').name")"
+          PACKAGE_VERSION="$(node -p "require('./packages/private-captcha-vue/package.json').version")"
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version >/dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish package
+        if: steps.package.outputs.publish == 'true'
+        run: npm publish --workspace @private-captcha/private-captcha-vue --access public --provenance
