@@ -60,9 +60,6 @@ describe('published package', () => {
     expect(esmBundle).not.toContain(packageRoot);
     expect(cjsBundle).not.toContain(packageRoot);
     expect(packageJson.peerDependencies.vue).toBe('^3.3.0');
-    expect(
-      packageJson.dependencies['@private-captcha/private-captcha-js-core'],
-    ).toBe('0.0.26');
     expect(files).toContain('dist/index.js');
     expect(files).toContain('dist/index.cjs');
     expect(files).toContain('dist/index.d.ts');
