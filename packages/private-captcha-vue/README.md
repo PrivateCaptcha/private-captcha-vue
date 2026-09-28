@@ -48,7 +48,7 @@ verified on your server.
 | Prop | Type | Default |
 |---|---|---|
 | `siteKey` | `string` | Required |
-| `startMode` | `'auto' \| 'click'` | `'auto'` |
+| `startMode` | `'auto' \| 'click'` \| 'load'` | `'auto'` |
 | `debug` | `boolean` | `false` |
 | `fieldName` | `string` | `'private-captcha-solution'` |
 | `puzzleEndpoint` | `string` | Private Captcha endpoint |
