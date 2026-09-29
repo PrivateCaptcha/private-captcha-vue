@@ -25,7 +25,7 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@private-captcha/private-captcha-js-core": "0.0.28"
+    "@private-captcha/private-captcha-js-core": "0.0.29"
   },
   "peerDependencies": {
     "vue": "^3.3.0"
