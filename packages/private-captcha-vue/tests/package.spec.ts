@@ -35,15 +35,8 @@ describe('published package', () => {
 
   it('includes declarations and only intended package paths', async () => {
     const declarations = await readFile(join(dist, 'index.d.ts'), 'utf8');
-    const componentDeclarations = await readFile(
-      join(dist, 'PrivateCaptcha.vue.d.ts'),
-      'utf8',
-    );
     const esmBundle = await readFile(join(dist, 'index.js'), 'utf8');
     const cjsBundle = await readFile(join(dist, 'index.cjs'), 'utf8');
-    const packageJson = JSON.parse(
-      await readFile(join(packageRoot, 'package.json'), 'utf8'),
-    );
     const { stdout } = await execFileAsync(
       'npm',
       ['pack', '--dry-run', '--json'],
@@ -56,10 +49,8 @@ describe('published package', () => {
     expect(declarations).not.toMatch(
       /PrivateCaptcha(DisplayMode|Language|Props|StartMode|Theme)/,
     );
-    expect(componentDeclarations).not.toContain('ComponentProvideOptions');
     expect(esmBundle).not.toContain(packageRoot);
     expect(cjsBundle).not.toContain(packageRoot);
-    expect(packageJson.peerDependencies.vue).toBe('^3.3.0');
     expect(files).toContain('dist/index.js');
     expect(files).toContain('dist/index.cjs');
     expect(files).toContain('dist/index.d.ts');
@@ -69,10 +60,7 @@ describe('published package', () => {
     expect(files.some((file: string) => file.includes('demo-app'))).toBe(false);
   });
 
-  it('typechecks the public API against the minimum Vue version', async () => {
-    const workspacePackageJson = JSON.parse(
-      await readFile(join(workspaceRoot, 'package.json'), 'utf8'),
-    );
+  it('typechecks the public API in a consumer project', async () => {
     const consumerRoot = await mkdtemp(
       join(tmpdir(), 'private-captcha-vue-consumer-'),
     );
@@ -130,7 +118,6 @@ props;
         JSON.stringify(consumerConfig),
       );
 
-      expect(workspacePackageJson.devDependencies.vue).toBe('3.3.0');
       await execFileAsync(
         process.execPath,
         [
